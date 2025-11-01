@@ -10,37 +10,37 @@ html, body {
 /* Full-screen background, anchored to bottom, allowed to crop */
 body {
   min-height: 100vh;
-  background-image: url('stirlingcastle.jpeg'); /* keep this file in the repo root */
+  background-image: url('stirlingcastle.jpeg');
   background-repeat: no-repeat;
-  background-position: center bottom;  /* start from the bottom */
-  background-size: cover;              /* fill screen, slight height crop allowed */
+  background-position: center bottom;
+  background-size: cover;
 }
 
-/* Top overlay bar with soft gradient for readability */
-.overlay.top {
+/* Bottom overlay bar with soft gradient for readability */
+.overlay.bottom {
   position: fixed;
-  top: 0;
   left: 0;
   right: 0;
-  padding: 16px 24px 24px;
+  bottom: 0;
+  padding: 20px 24px 28px;
   text-align: center;
   background: linear-gradient(
-    to bottom,
+    to top,
     rgba(0,0,0,0.55),
     rgba(0,0,0,0.25),
     rgba(0,0,0,0)
   );
   text-shadow: 0 2px 6px rgba(0,0,0,0.8);
-  pointer-events: none; /* prevents accidental focus with remotes */
+  pointer-events: none;
 }
 
-.overlay.top h1 {
+.overlay.bottom h1 {
   margin: 0 0 8px;
   font-size: clamp(28px, 5vw, 56px);
   font-weight: 700;
 }
 
-.overlay.top p {
+.overlay.bottom p {
   margin: 0;
   font-size: clamp(16px, 2.5vw, 28px);
 }
