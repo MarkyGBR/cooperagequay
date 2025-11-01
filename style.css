@@ -4,35 +4,43 @@ html, body {
   width: 100%;
   color: #fff;
   font-family: system-ui, Arial, sans-serif;
-  background-color: #000;
+  background: #000;
 }
 
-/* Use the image as the page background, anchored at the bottom */
+/* Full-screen background, anchored to bottom, allowed to crop */
 body {
   min-height: 100vh;
-  background-image: url('stirlingcastle.jpeg'); /* keep in repo root */
+  background-image: url('stirlingcastle.jpeg'); /* keep this file in the repo root */
   background-repeat: no-repeat;
-  background-position: center bottom;           /* show from the bottom */
-  background-size: contain;                     /* show full image, no crop */
-  display: grid;                                /* center overlay */
-  place-items: center;
+  background-position: center bottom;  /* start from the bottom */
+  background-size: cover;              /* fill screen, slight height crop allowed */
 }
 
-/* Overlay text block always on top */
-.overlay {
+/* Top overlay bar with soft gradient for readability */
+.overlay.top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 24px 24px;
   text-align: center;
-  padding: 16px 24px;
-  background: rgba(0,0,0,0.35);                 /* subtle readable backdrop */
-  border-radius: 12px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.55),
+    rgba(0,0,0,0.25),
+    rgba(0,0,0,0)
+  );
   text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+  pointer-events: none; /* prevents accidental focus with remotes */
 }
 
-.overlay h1 {
-  margin: 0 0 12px;
+.overlay.top h1 {
+  margin: 0 0 8px;
   font-size: clamp(28px, 5vw, 56px);
+  font-weight: 700;
 }
 
-.overlay p {
-  margin: 8px 0;
-  font-size: clamp(16px, 2.4vw, 28px);
+.overlay.top p {
+  margin: 0;
+  font-size: clamp(16px, 2.5vw, 28px);
 }
