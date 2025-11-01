@@ -22,7 +22,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 18px 24px 26px;
+  padding: 16px 22px 24px;
   text-align: center;
   background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.25), rgba(0,0,0,0));
   text-shadow: 0 2px 6px rgba(0,0,0,0.8);
@@ -31,37 +31,37 @@ body {
 }
 
 .overlay.bottom h1 {
-  margin: 0 0 8px;
-  font-size: clamp(28px, 5vw, 56px);
+  margin: 0 0 6px;
+  font-size: clamp(26px, 4.5vw, 50px);   /* slightly smaller */
   font-weight: 700;
 }
 
 .overlay.bottom .intro {
-  margin: 0 0 8px;
-  font-size: clamp(16px, 2.2vw, 24px);
+  margin: 0 6px 6px;
+  font-size: clamp(15px, 2vw, 22px);     /* slightly smaller */
   opacity: 0.95;
 }
 
 .overlay.bottom p {
   margin: 0;
-  font-size: clamp(16px, 2.4vw, 28px);
+  font-size: clamp(15px, 2.2vw, 26px);   /* slightly smaller */
 }
 
-/* Corner QR blocks */
+/* Corner QR blocks (reduced size + safe margins) */
 .qr {
   position: fixed;
-  bottom: 16px;
-  width: clamp(90px, 14vw, 150px);
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  width: clamp(80px, 11vw, 130px);       /* a bit smaller so it never clips */
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  z-index: 3;             /* above overlay */
-  pointer-events: none;   /* avoid accidental focus with remote */
+  gap: 8px;
+  z-index: 3;
+  pointer-events: none;
 }
 
-.qr-left { left: 16px; }
-.qr-right { right: 16px; }
+.qr-left  { left:  max(14px, env(safe-area-inset-left, 0px)); }
+.qr-right { right: max(14px, env(safe-area-inset-right, 0px)); }
 
 /* QR code visual box (placeholder) */
 .qr-box {
@@ -75,10 +75,15 @@ body {
 
 /* Label chip with subtle background for readability */
 .qr-label {
-  font-size: clamp(12px, 1.8vw, 16px);
+  font-size: clamp(11px, 1.6vw, 14px);   /* slightly smaller */
   padding: 6px 10px;
   background: rgba(0,0,0,0.45);
   border-radius: 999px;
   white-space: nowrap;
   text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+
+/* Extra guard for very small or overscanned displays */
+@media (max-width: 640px) {
+  .qr { width: clamp(72px, 16vw, 110px); }
 }
