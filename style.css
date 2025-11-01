@@ -7,7 +7,7 @@ html, body {
   background: #000;
 }
 
-/* Full-screen background, anchored to bottom, allowed to crop */
+/* Full-screen background, anchored to bottom, can crop height */
 body {
   min-height: 100vh;
   background-image: url('stirlingcastle.jpeg');
@@ -22,16 +22,12 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 20px 24px 28px;
+  padding: 18px 24px 26px;
   text-align: center;
-  background: linear-gradient(
-    to top,
-    rgba(0,0,0,0.55),
-    rgba(0,0,0,0.25),
-    rgba(0,0,0,0)
-  );
+  background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.25), rgba(0,0,0,0));
   text-shadow: 0 2px 6px rgba(0,0,0,0.8);
   pointer-events: none;
+  z-index: 2;
 }
 
 .overlay.bottom h1 {
@@ -40,7 +36,49 @@ body {
   font-weight: 700;
 }
 
+.overlay.bottom .intro {
+  margin: 0 0 8px;
+  font-size: clamp(16px, 2.2vw, 24px);
+  opacity: 0.95;
+}
+
 .overlay.bottom p {
   margin: 0;
-  font-size: clamp(16px, 2.5vw, 28px);
+  font-size: clamp(16px, 2.4vw, 28px);
+}
+
+/* Corner QR blocks */
+.qr {
+  position: fixed;
+  bottom: 16px;
+  width: clamp(90px, 14vw, 150px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 3;             /* above overlay */
+  pointer-events: none;   /* avoid accidental focus with remote */
+}
+
+.qr-left { left: 16px; }
+.qr-right { right: 16px; }
+
+/* QR code visual box (placeholder) */
+.qr-box {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  overflow: hidden;
+}
+
+/* Label chip with subtle background for readability */
+.qr-label {
+  font-size: clamp(12px, 1.8vw, 16px);
+  padding: 6px 10px;
+  background: rgba(0,0,0,0.45);
+  border-radius: 999px;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
