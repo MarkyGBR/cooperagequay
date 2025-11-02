@@ -4,14 +4,9 @@
   <meta charset="UTF-8" />
   <title>Welcome</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css?v=15" />
+  <link rel="stylesheet" href="style.css?v=16" />
 </head>
 <body>
-  <!-- Top-left brand logo (drop logo.png in repo root) -->
-  <div class="brand-logo">
-    <img src="logo.png" alt="Casa Del Stirling logo">
-  </div>
-
   <!-- Top: time + weather -->
   <div class="top-info" id="topInfo">
     <span id="time">--:--</span>
@@ -19,9 +14,12 @@
     <span id="weather">Stirling — --°C</span>
   </div>
 
-  <!-- Bottom overlay with title + intro + Wi-Fi -->
+  <!-- Bottom overlay with logo + title + intro + Wi-Fi -->
   <div class="overlay bottom">
     <div class="overlay-content">
+      <!-- Centered brand logo (slightly larger) -->
+      <img class="brand-mark" src="logo.png" alt="Casa Del Stirling logo">
+
       <h1 class="title">Welcome Amra & Marcus!</h1>
       <p class="intro">Welcome to 84 Cooperage Quay. We hope you have a pleasant stay.</p>
       <p class="wifi-pill"><span>Wi-Fi</span> Casa Del Stirling <span class="divider">|</span> <span>Pass</span> Welcome2Stirling!</p>
