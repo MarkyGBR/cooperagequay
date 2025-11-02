@@ -1,6 +1,8 @@
-:root { 
+:root {
   /* Overscan-safe edge so nothing clips off-screen */
   --edge: max(28px, 4.8vw);
+  /* Brand logo size similar to QR blocks */
+  --brand-size: clamp(56px, 7.2vw, 88px);
 }
 
 html, body {
@@ -21,22 +23,23 @@ body {
   background-size: cover;
 }
 
-/* --- Brand logo (top-left) --- */
+/* Brand logo (top-left, capped size) */
 .brand-logo{
   position: fixed;
-  top: calc(var(--edge) * 0.5);
+  top: var(--edge);
   left: var(--edge);
   z-index: 5;
-  pointer-events: none; /* avoid remote focus */
+  pointer-events: none;
 }
 .brand-logo img{
-  height: clamp(28px, 6vh, 64px); /* auto-scales on TVs */
-  width: auto;
+  width: var(--brand-size);
+  height: var(--brand-size);
+  object-fit: contain;
   display: block;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.7)); /* readability on bright areas */
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.7));
 }
 
-/* --- Top info (time + weather) --- */
+/* Top info (time + weather) */
 .top-info{
   position: fixed;
   top: calc(var(--edge) * 0.55);
@@ -57,7 +60,7 @@ body {
 }
 .top-info .dot{ opacity: 0.6; }
 
-/* --- Bottom overlay --- */
+/* Bottom overlay */
 .overlay.bottom {
   position: fixed;
   left: 0; right: 0; bottom: 0;
@@ -103,7 +106,7 @@ body {
 .wifi-pill span { opacity: 0.9; font-weight: 700; }
 .wifi-pill .divider { opacity: 0.6; padding: 0 8px; }
 
-/* --- QR row keeps both sides perfectly level --- */
+/* QR row keeps both sides perfectly level */
 .qr-row {
   position: fixed;
   left: var(--edge);
@@ -137,7 +140,7 @@ body {
   overflow: hidden;
 }
 
-/* Labels: left wraps as needed; right is forced to 2 lines via <br> + nowrap */
+/* Labels: left wraps; right is forced to 2 lines via <br> + nowrap */
 .qr-label {
   max-width: 100%;
   text-align: center;
@@ -149,14 +152,14 @@ body {
   background: rgba(0,0,0,0.45);
   text-shadow: 0 1px 3px rgba(0,0,0,0.85);
 }
-.qr.right .qr-label{
-  white-space: nowrap;               /* keeps it at exactly 2 lines with <br> */
+.qr-label.two-line{
+  white-space: nowrap;             /* prevents third line; <br> still breaks */
   word-break: keep-all;
   overflow-wrap: normal;
-  font-size: clamp(9px, 1.05vw, 11px);
+  font-size: clamp(9px, 1.05vw, 11px); /* tiny reduction to ensure fit */
 }
 
-/* Extra guards for safe areas / overscan */
+/* Safe areas / overscan guards */
 @supports (right: max(10px, env(safe-area-inset-right))) {
   .qr-row {
     left:  max(var(--edge), env(safe-area-inset-left, 0px));
