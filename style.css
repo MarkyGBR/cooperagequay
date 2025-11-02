@@ -21,7 +21,28 @@ body {
   background-size: cover;
 }
 
-/* Bottom overlay with gradient for readability */
+/* --- Top info (time + weather) --- */
+.top-info{
+  position: fixed;
+  top: calc(var(--edge) * 0.55);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  pointer-events: none;
+
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+
+  font-size: clamp(12px, 1.6vw, 16px);
+  padding: 6px 10px;
+  background: rgba(0,0,0,0.35);
+  border-radius: 999px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+.top-info .dot{ opacity: 0.6; }
+
+/* --- Bottom overlay --- */
 .overlay.bottom {
   position: fixed;
   left: 0; right: 0; bottom: 0;
@@ -101,7 +122,8 @@ body {
   overflow: hidden;
 }
 
-/* Label chip (wrap allowed, centered) */
+/* Label chip */
+/* Left: normal wrapping allowed; Right: exactly 2 lines via <br> and nowrap */
 .qr-label {
   max-width: 100%;
   text-align: center;
@@ -113,6 +135,12 @@ body {
   background: rgba(0,0,0,0.45);
   text-shadow: 0 1px 3px rgba(0,0,0,0.85);
 }
+.qr.right .qr-label{
+  white-space: nowrap;               /* prevent third line; <br> still works */
+  word-break: keep-all;
+  overflow-wrap: normal;
+  font-size: clamp(9px, 1.05vw, 11px); /* tiny reduction to ensure fit */
+}
 
 /* Extra guards for safe areas / overscan */
 @supports (right: max(10px, env(safe-area-inset-right))) {
@@ -122,7 +150,3 @@ body {
     bottom:max(var(--edge), env(safe-area-inset-bottom, 0px));
   }
 }
-
-/* Optional tiny nudge if your TV overscans hard:
-.qr-row { left: calc(var(--edge) + 8px); right: calc(var(--edge) + 8px); }
-*/
