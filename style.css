@@ -1,3 +1,8 @@
+:root{
+  /* Overscan-safe edge padding so elements never clip off-screen */
+  --edge: max(28px, 4.5vw);
+}
+
 html, body {
   margin: 0;
   height: 100%;
@@ -7,7 +12,7 @@ html, body {
   background: #000;
 }
 
-/* Full-screen background, anchored to bottom, can crop height */
+/* Full-screen background, anchored to bottom, allowed to crop */
 body {
   min-height: 100vh;
   background-image: url('stirlingcastle.jpeg');
@@ -16,54 +21,78 @@ body {
   background-size: cover;
 }
 
-/* Bottom overlay bar with soft gradient for readability */
+/* Bottom overlay with gradient for readability */
 .overlay.bottom {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 16px 22px 24px;
-  text-align: center;
+  padding: 16px var(--edge) calc(var(--edge) * 0.6);
   background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.25), rgba(0,0,0,0));
-  text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+  text-shadow: 0 2px 6px rgba(0,0,0,0.85);
   pointer-events: none;
   z-index: 2;
 }
 
-.overlay.bottom h1 {
-  margin: 0 0 6px;
-  font-size: clamp(26px, 4.5vw, 50px);   /* slightly smaller */
+.overlay-content{
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  gap: 8px; /* clearer vertical spacing */
+  text-align: center;
+}
+
+.title{
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  font-size: clamp(24px, 4.2vw, 46px); /* slightly smaller */
+}
+
+.intro{
+  margin: 0;
+  opacity: 0.95;
+  font-weight: 400;
+  font-size: clamp(14px, 1.9vw, 20px); /* slightly smaller and distinct */
+}
+
+/* Wi-Fi line styled as a subtle pill to differentiate */
+.wifi-pill{
+  margin: 2px auto 0;
+  padding: 6px 12px;
+  display: inline-block;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.38);
+  font-size: clamp(14px, 2.1vw, 22px); /* slightly smaller */
+  letter-spacing: 0.2px;
+}
+.wifi-pill span{
+  opacity: 0.9;
   font-weight: 700;
 }
-
-.overlay.bottom .intro {
-  margin: 0 6px 6px;
-  font-size: clamp(15px, 2vw, 22px);     /* slightly smaller */
-  opacity: 0.95;
+.wifi-pill .divider{
+  opacity: 0.6;
+  padding: 0 8px;
 }
 
-.overlay.bottom p {
-  margin: 0;
-  font-size: clamp(15px, 2.2vw, 26px);   /* slightly smaller */
-}
-
-/* Corner QR blocks (reduced size + safe margins) */
+/* Corner QR blocks — smaller + guaranteed in-bounds */
 .qr {
   position: fixed;
-  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
-  width: clamp(80px, 11vw, 130px);       /* a bit smaller so it never clips */
+  bottom: var(--edge);
+  width: clamp(68px, 9vw, 104px);     /* slightly smaller than before */
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   z-index: 3;
   pointer-events: none;
 }
 
-.qr-left  { left:  max(14px, env(safe-area-inset-left, 0px)); }
-.qr-right { right: max(14px, env(safe-area-inset-right, 0px)); }
+/* Keep QR blocks inside safe area even with overscan */
+.qr-left  { left:  var(--edge); }
+.qr-right { right: var(--edge); }
 
-/* QR code visual box (placeholder) */
+/* QR visual box (placeholder) */
 .qr-box {
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -73,17 +102,21 @@ body {
   overflow: hidden;
 }
 
-/* Label chip with subtle background for readability */
+/* Label chip */
 .qr-label {
-  font-size: clamp(11px, 1.6vw, 14px);   /* slightly smaller */
+  font-size: clamp(10px, 1.3vw, 13px); /* smaller label */
   padding: 6px 10px;
   background: rgba(0,0,0,0.45);
   border-radius: 999px;
   white-space: nowrap;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.85);
 }
 
-/* Extra guard for very small or overscanned displays */
+/* Extra guards for small or heavily overscanned displays */
+@supports (right: max(10px, env(safe-area-inset-right))) {
+  .qr-left  { left:  max(var(--edge), env(safe-area-inset-left, 0px)); }
+  .qr-right { right: max(var(--edge), env(safe-area-inset-right, 0px)); }
+}
 @media (max-width: 640px) {
-  .qr { width: clamp(72px, 16vw, 110px); }
+  .qr { width: clamp(62px, 14vw, 94px); }
 }
