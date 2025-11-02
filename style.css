@@ -21,6 +21,21 @@ body {
   background-size: cover;
 }
 
+/* --- Brand logo (top-left) --- */
+.brand-logo{
+  position: fixed;
+  top: calc(var(--edge) * 0.5);
+  left: var(--edge);
+  z-index: 5;
+  pointer-events: none; /* avoid remote focus */
+}
+.brand-logo img{
+  height: clamp(28px, 6vh, 64px); /* auto-scales on TVs */
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.7)); /* readability on bright areas */
+}
+
 /* --- Top info (time + weather) --- */
 .top-info{
   position: fixed;
@@ -122,8 +137,7 @@ body {
   overflow: hidden;
 }
 
-/* Label chip */
-/* Left: normal wrapping allowed; Right: exactly 2 lines via <br> and nowrap */
+/* Labels: left wraps as needed; right is forced to 2 lines via <br> + nowrap */
 .qr-label {
   max-width: 100%;
   text-align: center;
@@ -136,10 +150,10 @@ body {
   text-shadow: 0 1px 3px rgba(0,0,0,0.85);
 }
 .qr.right .qr-label{
-  white-space: nowrap;               /* prevent third line; <br> still works */
+  white-space: nowrap;               /* keeps it at exactly 2 lines with <br> */
   word-break: keep-all;
   overflow-wrap: normal;
-  font-size: clamp(9px, 1.05vw, 11px); /* tiny reduction to ensure fit */
+  font-size: clamp(9px, 1.05vw, 11px);
 }
 
 /* Extra guards for safe areas / overscan */
