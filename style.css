@@ -120,3 +120,17 @@ body {
 @media (max-width: 640px) {
   .qr { width: clamp(62px, 14vw, 94px); }
 }
+
+/* --- QR right label fix: keep fully on-screen --- */
+.qr { width: clamp(62px, 8.6vw, 96px); }            /* tiny shrink */
+.qr-right { right: calc(var(--edge) + 8px); }        /* nudge inward a bit */
+
+.qr-label {
+  max-width: 100%;
+  white-space: normal;                                /* allow wrap (was nowrap) */
+  line-height: 1.2;
+  padding: 6px 8px;                                  /* slightly slimmer chip */
+  border-radius: 10px;                                /* looks better if it wraps */
+  font-size: clamp(10px, 1.2vw, 12px);               /* tiny size reduction */
+  text-align: center;
+}
