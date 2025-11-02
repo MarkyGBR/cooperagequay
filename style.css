@@ -1,8 +1,8 @@
 :root {
   /* Overscan-safe edge so nothing clips off-screen */
   --edge: max(28px, 4.8vw);
-  /* Brand logo size similar to QR blocks */
-  --brand-size: clamp(56px, 7.2vw, 88px);
+  /* Slightly larger brand mark (centered above title) */
+  --brand-size: clamp(72px, 9vw, 120px);
 }
 
 html, body {
@@ -21,22 +21,6 @@ body {
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: cover;
-}
-
-/* Brand logo (top-left, capped size) */
-.brand-logo{
-  position: fixed;
-  top: var(--edge);
-  left: var(--edge);
-  z-index: 5;
-  pointer-events: none;
-}
-.brand-logo img{
-  width: var(--brand-size);
-  height: var(--brand-size);
-  object-fit: contain;
-  display: block;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.7));
 }
 
 /* Top info (time + weather) */
@@ -75,8 +59,18 @@ body {
   max-width: 1500px;              /* wide so lines are ~2 max on TV */
   margin: 0 auto;
   display: grid;
-  gap: 10px;                       /* clearer spacing between lines */
+  gap: 12px;                       /* extra spacing */
   text-align: center;
+}
+
+/* Centered brand logo above title */
+.brand-mark{
+  width: var(--brand-size);
+  height: var(--brand-size);
+  object-fit: contain;
+  margin: 0 auto 2px;             /* small gap above title */
+  display: block;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.7));
 }
 
 .title {
