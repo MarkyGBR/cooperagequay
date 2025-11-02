@@ -1,91 +1,128 @@
-:root{ --edge: max(28px, 4.8vw); }
+:root { 
+  /* Overscan-safe edge so nothing clips off-screen */
+  --edge: max(28px, 4.8vw);
+}
 
 html, body {
-  margin: 0; height: 100%; width: 100%;
-  color: #fff; font-family: system-ui, Arial, sans-serif;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  color: #fff;
+  font-family: system-ui, Arial, sans-serif;
   background: #000;
 }
 
-/* Full-screen image, anchored to bottom, allowed to crop */
+/* Full-screen image, anchored to bottom, slight crop allowed */
 body {
   min-height: 100vh;
-  background-image: url('stirlingcastle.jpeg');
+  background-image: url('stirlingcastle.jpeg'); /* keep in repo root */
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: cover;
 }
 
-/* Bottom overlay */
+/* Bottom overlay with gradient for readability */
 .overlay.bottom {
-  position: fixed; left: 0; right: 0; bottom: 0;
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
   padding: 16px var(--edge) calc(var(--edge) * 0.6);
   background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.25), rgba(0,0,0,0));
   text-shadow: 0 2px 6px rgba(0,0,0,0.85);
-  pointer-events: none; z-index: 2;
+  pointer-events: none;
+  z-index: 2;
 }
 
-.overlay-content{
-  max-width: 1500px;            /* wider so lines rarely exceed 2 */
+.overlay-content {
+  max-width: 1500px;              /* wide so lines are ~2 max on TV */
   margin: 0 auto;
-  display: grid; gap: 10px;     /* clearer spacing */
+  display: grid;
+  gap: 10px;                       /* clearer spacing between lines */
   text-align: center;
 }
 
-.title{
-  margin: 0; font-weight: 800; letter-spacing: 0.4px;
+.title {
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: 0.4px;
   font-size: clamp(24px, 4.1vw, 46px);
 }
 
-.intro{
-  margin: 0 auto; opacity: 0.95; font-weight: 400;
+.intro {
+  margin: 0 auto;
+  opacity: 0.95;
+  font-weight: 400;
   font-size: clamp(14px, 1.9vw, 20px);
-  max-width: min(95vw, 1400px); /* keep to ~2 lines on TV */
+  max-width: min(95vw, 1400px);
 }
 
-.wifi-pill{
-  margin: 2px auto 0; padding: 6px 12px; display: inline-block;
-  border-radius: 999px; background: rgba(0,0,0,0.38);
+.wifi-pill {
+  margin: 2px auto 0;
+  padding: 6px 12px;
+  display: inline-block;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.38);
   font-size: clamp(14px, 2.0vw, 21px);
   letter-spacing: 0.2px;
 }
-.wifi-pill span{ opacity: 0.9; font-weight: 700; }
-.wifi-pill .divider{ opacity: 0.6; padding: 0 8px; }
+.wifi-pill span { opacity: 0.9; font-weight: 700; }
+.wifi-pill .divider { opacity: 0.6; padding: 0 8px; }
 
 /* --- QR row keeps both sides perfectly level --- */
-.qr-row{
-  position: fixed; left: var(--edge); right: var(--edge); bottom: var(--edge);
-  display: grid; grid-template-columns: 1fr 1fr;
-  align-items: end; z-index: 3; pointer-events: none;
+.qr-row {
+  position: fixed;
+  left: var(--edge);
+  right: var(--edge);
+  bottom: var(--edge);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  z-index: 3;
+  pointer-events: none;
 }
 
 /* Each QR block */
-.qr{
-  width: clamp(60px, 8.2vw, 92px);   /* slightly smaller */
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
+.qr {
+  width: clamp(60px, 8vw, 90px);   /* consistent size */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 }
 .qr.left  { justify-self: start; }
-.qr.right { justify-self: end;   }
+.qr.right { justify-self: end; }
 
-.qr-box{
-  width: 100%; aspect-ratio: 1 / 1; background: #fff; border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35); overflow: hidden;
+/* QR visual box */
+.qr-box {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  overflow: hidden;
 }
 
-.qr-label{
-  max-width: min(28ch, 44vw);   /* wider label so it wraps to ≤2 lines */
+/* Label chip (wrap allowed, centered) */
+.qr-label {
+  max-width: 100%;
   text-align: center;
-  white-space: normal; line-height: 1.2;
+  white-space: normal;
+  line-height: 1.2;
   font-size: clamp(10px, 1.15vw, 12px);
-  padding: 6px 8px; border-radius: 10px;
+  padding: 6px 8px;
+  border-radius: 10px;
   background: rgba(0,0,0,0.45);
   text-shadow: 0 1px 3px rgba(0,0,0,0.85);
 }
 
-/* Extra guards for overscan/safe areas */
+/* Extra guards for safe areas / overscan */
 @supports (right: max(10px, env(safe-area-inset-right))) {
-  .qr-row{
-    left: max(var(--edge), env(safe-area-inset-left, 0px));
+  .qr-row {
+    left:  max(var(--edge), env(safe-area-inset-left, 0px));
     right: max(var(--edge), env(safe-area-inset-right, 0px));
-    bottom: max(var(--edge), env(safe-area-inset-bottom, 0px));
+    bottom:max(var(--edge), env(safe-area-inset-bottom, 0px));
   }
 }
+
+/* Optional tiny nudge if your TV overscans hard:
+.qr-row { left: calc(var(--edge) + 8px); right: calc(var(--edge) + 8px); }
+*/
