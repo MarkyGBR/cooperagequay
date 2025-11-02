@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <title>Welcome</title>
-  <link rel="stylesheet" href="style.css?v=6" />
+  <link rel="stylesheet" href="style.css?v=7" />
 </head>
 <body>
   <!-- Bottom overlay with title + intro + Wi-Fi -->
   <div class="overlay bottom">
-    <h1>Welcome Amra & Marcus!</h1>
-    <p class="intro">Welcome to 84 Cooperage Quay — we hope you have a pleasant stay.</p>
-    <p>Wi-Fi: <strong>Casa Del Stirling</strong> | Pass: <strong>Welcome2Stirling!</strong></p>
+    <div class="overlay-content">
+      <h1 class="title">Welcome Amra & Marcus!</h1>
+      <p class="intro">Welcome to 84 Cooperage Quay. We hope you have a pleasant stay.</p>
+      <p class="wifi-pill"><span>Wi-Fi</span> Casa Del Stirling <span class="divider">|</span> <span>Pass</span> Welcome2Stirling!</p>
+    </div>
   </div>
 
   <!-- Bottom-left QR: Local Guide (placeholder) -->
   <div class="qr qr-left">
     <div class="qr-label">Scan for Local Guide</div>
     <div class="qr-box" aria-hidden="true">
+      <!-- Placeholder QR SVG -->
       <svg viewBox="0 0 120 120" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
         <rect width="120" height="120" fill="#fff"/>
         <rect x="6" y="6" width="32" height="32" fill="#000"/>
@@ -35,6 +38,7 @@
   <div class="qr qr-right">
     <div class="qr-label">Message us on WhatsApp</div>
     <div class="qr-box" aria-hidden="true">
+      <!-- Placeholder QR SVG -->
       <svg viewBox="0 0 120 120" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
         <rect width="120" height="120" fill="#fff"/>
         <rect x="6" y="6" width="32" height="32" fill="#000"/>
