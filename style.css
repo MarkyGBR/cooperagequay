@@ -1,18 +1,12 @@
-:root{
-  /* Overscan-safe edge padding so elements never clip off-screen */
-  --edge: max(28px, 4.5vw);
-}
+:root{ --edge: max(28px, 4.8vw); }
 
 html, body {
-  margin: 0;
-  height: 100%;
-  width: 100%;
-  color: #fff;
-  font-family: system-ui, Arial, sans-serif;
+  margin: 0; height: 100%; width: 100%;
+  color: #fff; font-family: system-ui, Arial, sans-serif;
   background: #000;
 }
 
-/* Full-screen background, anchored to bottom, allowed to crop */
+/* Full-screen image, anchored to bottom, allowed to crop */
 body {
   min-height: 100vh;
   background-image: url('stirlingcastle.jpeg');
@@ -21,116 +15,77 @@ body {
   background-size: cover;
 }
 
-/* Bottom overlay with gradient for readability */
+/* Bottom overlay */
 .overlay.bottom {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: fixed; left: 0; right: 0; bottom: 0;
   padding: 16px var(--edge) calc(var(--edge) * 0.6);
   background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.25), rgba(0,0,0,0));
   text-shadow: 0 2px 6px rgba(0,0,0,0.85);
-  pointer-events: none;
-  z-index: 2;
+  pointer-events: none; z-index: 2;
 }
 
 .overlay-content{
-  max-width: 1200px;
+  max-width: 1500px;            /* wider so lines rarely exceed 2 */
   margin: 0 auto;
-  display: grid;
-  gap: 8px; /* clearer vertical spacing */
+  display: grid; gap: 10px;     /* clearer spacing */
   text-align: center;
 }
 
 .title{
-  margin: 0;
-  font-weight: 800;
-  letter-spacing: 0.4px;
-  font-size: clamp(24px, 4.2vw, 46px); /* slightly smaller */
+  margin: 0; font-weight: 800; letter-spacing: 0.4px;
+  font-size: clamp(24px, 4.1vw, 46px);
 }
 
 .intro{
-  margin: 0;
-  opacity: 0.95;
-  font-weight: 400;
-  font-size: clamp(14px, 1.9vw, 20px); /* slightly smaller and distinct */
+  margin: 0 auto; opacity: 0.95; font-weight: 400;
+  font-size: clamp(14px, 1.9vw, 20px);
+  max-width: min(95vw, 1400px); /* keep to ~2 lines on TV */
 }
 
-/* Wi-Fi line styled as a subtle pill to differentiate */
 .wifi-pill{
-  margin: 2px auto 0;
-  padding: 6px 12px;
-  display: inline-block;
-  border-radius: 999px;
-  background: rgba(0,0,0,0.38);
-  font-size: clamp(14px, 2.1vw, 22px); /* slightly smaller */
+  margin: 2px auto 0; padding: 6px 12px; display: inline-block;
+  border-radius: 999px; background: rgba(0,0,0,0.38);
+  font-size: clamp(14px, 2.0vw, 21px);
   letter-spacing: 0.2px;
 }
-.wifi-pill span{
-  opacity: 0.9;
-  font-weight: 700;
-}
-.wifi-pill .divider{
-  opacity: 0.6;
-  padding: 0 8px;
-}
+.wifi-pill span{ opacity: 0.9; font-weight: 700; }
+.wifi-pill .divider{ opacity: 0.6; padding: 0 8px; }
 
-/* Corner QR blocks — smaller + guaranteed in-bounds */
-.qr {
-  position: fixed;
-  bottom: var(--edge);
-  width: clamp(68px, 9vw, 104px);     /* slightly smaller than before */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  z-index: 3;
-  pointer-events: none;
+/* --- QR row keeps both sides perfectly level --- */
+.qr-row{
+  position: fixed; left: var(--edge); right: var(--edge); bottom: var(--edge);
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: end; z-index: 3; pointer-events: none;
 }
 
-/* Keep QR blocks inside safe area even with overscan */
-.qr-left  { left:  var(--edge); }
-.qr-right { right: var(--edge); }
+/* Each QR block */
+.qr{
+  width: clamp(60px, 8.2vw, 92px);   /* slightly smaller */
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.qr.left  { justify-self: start; }
+.qr.right { justify-self: end;   }
 
-/* QR visual box (placeholder) */
-.qr-box {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-  overflow: hidden;
+.qr-box{
+  width: 100%; aspect-ratio: 1 / 1; background: #fff; border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35); overflow: hidden;
 }
 
-/* Label chip */
-.qr-label {
-  font-size: clamp(10px, 1.3vw, 13px); /* smaller label */
-  padding: 6px 10px;
+.qr-label{
+  max-width: min(28ch, 44vw);   /* wider label so it wraps to ≤2 lines */
+  text-align: center;
+  white-space: normal; line-height: 1.2;
+  font-size: clamp(10px, 1.15vw, 12px);
+  padding: 6px 8px; border-radius: 10px;
   background: rgba(0,0,0,0.45);
-  border-radius: 999px;
-  white-space: nowrap;
   text-shadow: 0 1px 3px rgba(0,0,0,0.85);
 }
 
-/* Extra guards for small or heavily overscanned displays */
+/* Extra guards for overscan/safe areas */
 @supports (right: max(10px, env(safe-area-inset-right))) {
-  .qr-left  { left:  max(var(--edge), env(safe-area-inset-left, 0px)); }
-  .qr-right { right: max(var(--edge), env(safe-area-inset-right, 0px)); }
-}
-@media (max-width: 640px) {
-  .qr { width: clamp(62px, 14vw, 94px); }
-}
-
-/* --- QR right label fix: keep fully on-screen --- */
-.qr { width: clamp(62px, 8.6vw, 96px); }            /* tiny shrink */
-.qr-right { right: calc(var(--edge) + 8px); }        /* nudge inward a bit */
-
-.qr-label {
-  max-width: 100%;
-  white-space: normal;                                /* allow wrap (was nowrap) */
-  line-height: 1.2;
-  padding: 6px 8px;                                  /* slightly slimmer chip */
-  border-radius: 10px;                                /* looks better if it wraps */
-  font-size: clamp(10px, 1.2vw, 12px);               /* tiny size reduction */
-  text-align: center;
+  .qr-row{
+    left: max(var(--edge), env(safe-area-inset-left, 0px));
+    right: max(var(--edge), env(safe-area-inset-right, 0px));
+    bottom: max(var(--edge), env(safe-area-inset-bottom, 0px));
+  }
 }
